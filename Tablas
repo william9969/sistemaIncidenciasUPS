@@ -1,0 +1,355 @@
+usuarios.controller.js
+roles.controller.js
+usuariosRoles.controller.js
+permisos.controller.js
+rolesPermisos.controller.js
+menus.controller.js
+rolesMenus.controller.js
+ciudadanos.controller.js
+categoriasIncidencia.controller.js
+tiposIncidencia.controller.js
+estadosIncidencia.controller.js
+prioridades.controller.js
+sectores.controller.js
+incidencias.controller.js
+incidenciasSectores.controller.js
+asignacionesIncidencia.controller.js
+seguimientoIncidencia.controller.js
+historialEstadosIncidencia.controller.js
+adjuntosIncidencia.controller.js
+evidenciasResolucion.controller.js
+auditoria.controller.js
+notificaciones.controller.js
+--
+usuarios.model.js
+roles.model.js
+usuariosRoles.model.js
+permisos.model.js
+rolesPermisos.model.js
+menus.model.js
+rolesMenus.model.js
+ciudadanos.model.js
+categoriasIncidencia.model.js
+tiposIncidencia.model.js
+estadosIncidencia.model.js
+prioridades.model.js
+sectores.model.js
+incidencias.model.js
+incidenciasSectores.model.js
+asignacionesIncidencia.model.js
+seguimientoIncidencia.model.js
+historialEstadosIncidencia.model.js
+adjuntosIncidencia.model.js
+evidenciasResolucion.model.js
+auditoria.model.js
+notificaciones.model.js
+ --
+usuarios.routes.js
+roles.routes.js
+usuariosRoles.routes.js
+permisos.routes.js
+rolesPermisos.routes.js
+menus.routes.js
+rolesMenus.routes.js
+ciudadanos.routes.js
+categoriasIncidencia.routes.js
+tiposIncidencia.routes.js
+estadosIncidencia.routes.js
+prioridades.routes.js
+sectores.routes.js
+incidencias.routes.js
+incidenciasSectores.routes.js
+asignacionesIncidencia.routes.js
+seguimientoIncidencia.routes.js
+historialEstadosIncidencia.routes.js
+adjuntosIncidencia.routes.js
+evidenciasResolucion.routes.js
+auditoria.routes.js
+notificaciones.routes.js
+--
+
+usuarios.service.js
+roles.service.js
+usuariosRoles.service.js
+permisos.service.js
+rolesPermisos.service.js
+menus.service.js
+rolesMenus.service.js
+ciudadanos.service.js
+categoriasIncidencia.service.js
+tiposIncidencia.service.js
+estadosIncidencia.service.js
+prioridades.service.js
+sectores.service.js
+incidencias.service.js
+incidenciasSectores.service.js
+asignacionesIncidencia.service.js
+seguimientoIncidencia.service.js
+historialEstadosIncidencia.service.js
+adjuntosIncidencia.service.js
+evidenciasResolucion.service.js
+auditoria.service.js
+notificaciones.service.js
+
+UsuariosRol
+
+TABLE usuarios_roles (
+    id_usuario_rol int,
+    id_usuario int,
+    id_rol int,
+    fecha_asignacion DATETIME,
+    asignado_por int,
+    estado String('activo', 'inactivo') DEFAULT 'activo',
+);
+
+
+
+TABLE permisos (
+    id_permiso int,
+    codigo_permiso String,
+    nombre_permiso String,
+    descripcion String,
+    modulo String,
+    estado String('activo', 'inactivo') DEFAULT 'activo',
+);
+TABLE roles_permisos (
+    id_rol_permiso int,
+    id_rol BIGINT int,
+    id_permiso int,
+    permitido int,
+    fecha_asignacion DATETIME,
+    asignado_por int,
+);
+
+TABLE menus (
+    id_menu int,
+    nombre_menu String,
+    ruta String,
+    icono String,
+    orden_visual int
+    id_menu_padre int,
+    estado String('activo', 'inactivo') DEFAULT 'activo',
+    descripcion String
+);
+
+
+TABLE roles_menus (
+    id_rol_menu int,
+    id_rol int,
+    id_menu int,
+    puede_ver int,
+    puede_crear int,
+    puede_editar int,
+    puede_eliminar int,
+    puede_aprobar int,
+    fecha_asignacion DATETIME
+);
+
+
+TABLE ciudadanos (
+    id_ciudadano int,
+    nombres String,
+    apellidos String,
+    identificacion String,
+    correo String,
+    telefono String,
+    direccion String,
+    genero String('masculino', 'femenino', 'otro', 'no_especifica'),
+    fecha_nacimiento DATE ,
+    password_hash String,
+    tipo_registro String('registrado', 'invitado', 'anonimo_controlado') DEFAULT 'registrado',
+    estado String('activo', 'inactivo', 'bloqueado') DEFAULT 'activo',
+    fecha_creacion DATETIME,
+    fecha_actualizacion DATETIME
+);
+
+TABLE categorias_incidencia (
+    id_categoria int,
+    nombre_categoria String,
+    descripcion String,
+    icono String,
+    color_referencia String,
+    estado Sring('activo', 'inactivo') DEFAULT 'activo'
+) ;
+
+
+
+TABLE tipos_incidencia (
+    id_tipo int,
+    id_categoria int,
+    nombre_tipo String,
+    descripcion String,
+    nivel_prioridad_sugerido String('baja', 'media', 'alta', 'critica') DEFAULT 'media',
+    estado String('activo', 'inactivo') DEFAULT 'activo'
+);
+
+
+
+
+TABLE estados_incidencia (
+    id_estado int,
+    nombre_estado String,
+    descripcion String,
+    orden_flujo INT,
+    es_final int
+    color String,
+    estado String('activo', 'inactivo') DEFAULT 'activo'
+);
+TABLE prioridades (
+    id_prioridad int,
+    nombre_prioridad String,
+    valor_numerico INT,
+    descripcion String,
+    estado String('activo', 'inactivo') DEFAULT 'activo',
+);
+
+
+TABLE sectores (
+    id_sector int,
+    nombre_sector String,
+    descripcion String,
+    parroquia String,
+    zona String,
+    estado String('activo', 'inactivo') DEFAULT 'activo'
+);
+
+
+
+
+TABLE incidencias (
+    id_incidencia int,
+    codigo_incidencia String,
+    id_ciudadano int,
+    id_categoria int,
+    id_tipo int,
+    titulo String,
+    descripcion String,
+    direccion_referencial String,
+    latitud double,
+    longitud double,
+    referencia_ubicacion String,
+    fecha_reporte DATETIME,
+    id_estado_actual int,
+    id_prioridad int
+    canal_reporte string ('web', 'movil', 'presencial', 'api') DEFAULT 'web',
+    origen_reporte String('ciudadano', 'operador', 'importacion') DEFAULT 'ciudadano',
+    nivel_confianza double,
+    puntaje_criticidad double,
+    duplicada_de int,
+    requiere_inspeccion int,
+    observacion_inicial String,
+    fecha_ultima_actualizacion DATETIME,
+    activo int,
+
+);
+
+
+
+
+
+////////////*********************
+TABLE incidencias_sectores (
+    id_incidencia_sector int,
+    id_incidencia int,
+    id_sector ibnt,
+    fecha_asignacion DATETIME
+);
+
+
+
+
+TABLE asignaciones_incidencia (
+    id_asignacion int,
+    id_incidencia int,
+    id_usuario_asignado int,
+    id_usuario_asignador int,
+    fecha_asignacion DATETIME,
+    fecha_reasignacion DATETIME,
+    motivo_asignacion String,
+    estado_asignacion String('activa', 'reasignada', 'finalizada')DEFAULT 'activa',
+);
+
+
+TABLE seguimiento_incidencia (
+    id_seguimiento int
+    id_incidencia int,
+    id_usuario int,
+    id_ciudadano int,
+    tipo_seguimiento String('comentario', 'revision', 'inspeccion', 'atencion', 'cierre'),
+    detalle String,
+    fecha_seguimiento DATETIME,
+    visible_para_ciudadano int,
+    latitud double,
+    longitud double
+);
+
+
+
+
+
+TABLE historial_estados_incidencia (
+    id_historial_estado int,
+    id_incidencia int,
+    id_estado_anterior int,
+    id_estado_nuevo int,
+    id_usuario_cambio int,
+    motivo_cambio String,
+    fecha_cambio DATETIME
+);
+
+
+
+TABLE adjuntos_incidencia (
+    id_adjunto int,
+    id_incidencia int,
+    tipo_adjunto String('imagen', 'video', 'pdf', 'documento', 'otro') DEFAULT 'imagen',
+    nombre_archivo String,
+    ruta_archivo String,
+    tamano_archivo int,
+    mime_type String,
+    subido_por_usuario int,
+    subido_por_ciudadano int,
+    fecha_subida DATETIME,
+    descripcion String,
+    estado String('activo', 'inactivo') DEFAULT 'activo',
+);
+
+
+TABLE evidencias_resolucion (
+    id_evidencia int,
+    id_incidencia int,
+    descripcion String,
+    url_archivo String,
+    fecha_registro DATETIME,
+    id_usuario_registro int,
+);
+
+
+TABLE auditoria (
+    id_auditoria int,
+    tabla_afectada String,
+    id_registro_afectado String,
+    accion String('INSERT', 'UPDATE', 'DELETE', 'LOGIN', 'LOGOUT'),
+    valor_anterior String,
+    valor_nuevo String,
+    id_usuario int,
+    ip_origen String,
+    user_agent String,
+    fecha_evento DATETIME
+
+);
+
+TABLE notificaciones (
+    id_notificacion int,
+    tipo_destinatario String('usuario_sistema', 'ciudadano'),
+    id_usuario int,
+    id_ciudadano int.
+    titulo String,
+    mensaje String,
+    tipo_notificacion String('correo', 'push', 'interna', 'sms') DEFAULT 'interna',
+    estado_lectura String('no_leida', 'leida') DEFAULT 'no_leida',
+    fecha_envio DATETIME,
+    fecha_lectura DATETIME,
+    referencia_tipo String,
+    referencia_id int
+);
